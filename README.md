@@ -1,4 +1,4 @@
-== module: conntrackd
+# conntrackd
 
 Manages conntrackd to sync the iptables / netfilter conntrack tables between two or more nodes.
 
@@ -6,7 +6,7 @@ Have a look at the main module class (<tt>init.pp</tt>) to see what this
 module does on a node plus usage examples.
 
 
-=== Compatibility
+## Compatibility
 
 Supports both ipv4 and ipv6, all conntrackd options and all sync modes.
 
@@ -15,7 +15,7 @@ Tested and working with Ubuntu 12.04 and Debian Squeeze.
 This module is designed to work with Puppet version 2.7.x or newer.
 
 
-=== Requirements
+## Requirements
 
 This module has got the following module dependencies:
 
@@ -27,47 +27,57 @@ This module has got the following module dependencies:
   * The {module source code}[http://j.mp/w00GZr] to get a listing of available
     functions.
 
-=== Usage examples
+## Usage examples
 
-Install and manage the conntrackd service without setting any configuration
+### Install and manage the conntrackd service
 
+```
   class  { "conntrackd": }
+```
 
-Multicast Sync over eth1 using the default FTFW sync mode
+### Multicast Sync over eth1 using the default FTFW sync mode:
 
+```
   class { "conntrackd::config":
           protocol       => 'Multicast',
           interface      => 'eth1',
           ipv4_address   => ${multicast_address},
           ipv4_interface => ${ipaddress_eth1},
   }
+```
 
-UDP Sync over eth2 using the ALARM sync mode
+### UDP Sync over eth2 using the ALARM sync mode:
 
+```
   class  { "conntrackd::config":
           protocol       => 'UDP',
           interface      => 'eth2',
           ipv4_address   => ${ipaddress_eth2},
           udp_ipv4_dest  => ${other_remote_host},
   }
+```
 
-Remove service, package and configuration of conntrackd:
+### Remove service, package and configuration of conntrackd:
 
+````
   class  { "conntrackd":
           ensure         => 'absent'
   }
+```
 
-=== TODO
+You can find more examples in the examples dir.
+
+## TODO
 
 * Add support for RedHat based systems 
 
-=== Links
+## Links
 
 * {Official conntrackd website}[http://conntrack-tools.netfilter.org/conntrackd.html]
 * {Official project page}[https://github.com/bisscuitt/puppet-module-conntrackd]
 * {Official Puppet Style Guide}[http://j.mp/fCVSng]
 
-=== License, Copyright
+## License, Copyright
 
 See COPYING and NOTICE file in the root directory of this module.
 
