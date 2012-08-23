@@ -21,7 +21,7 @@ This module has got the following module dependencies:
 
 [stdlib]
   Version 2.3.1 or newer. Standard library of useful resources by Puppet Labs.
-  It provides functions like validate_*(), is_*() and empty(). 
+  It provides functions like validate\_\*(), is\_\*() and empty(). 
   More information:
   * stdlib at Puppet Forge <http://forge.puppetlabs.com/puppetlabs/stdlib>
   * The module source code <http://j.mp/w00GZr> to get a listing of available
