@@ -19,12 +19,12 @@ This module is designed to work with Puppet version 2.7.x or newer.
 
 This module has got the following module dependencies:
 
-[*stdlib*]
+[stdlib]
   Version 2.3.1 or newer. Standard library of useful resources by Puppet Labs.
-  It provides functions like <tt>validate_*()</tt>, <tt>is_*()</tt> and
-  <tt>empty()</tt>. More information:
-  * {stdlib at Puppet Forge}[http://forge.puppetlabs.com/puppetlabs/stdlib]
-  * The {module source code}[http://j.mp/w00GZr] to get a listing of available
+  It provides functions like validate_*(), is_*() and empty(). 
+  More information:
+  * stdlib at Puppet Forge <http://forge.puppetlabs.com/puppetlabs/stdlib>
+  * The module source code <http://j.mp/w00GZr> to get a listing of available
     functions.
 
 ## Usage examples
@@ -74,9 +74,9 @@ You can find more examples in the examples dir.
 
 ## Links
 
-* {Official conntrackd website}[http://conntrack-tools.netfilter.org/conntrackd.html]
-* {Official project page}[https://github.com/bisscuitt/puppet-module-conntrackd]
-* {Official Puppet Style Guide}[http://j.mp/fCVSng]
+* Official conntrackd website <http://conntrack-tools.netfilter.org/conntrackd.html>
+* Official project page <https://github.com/bisscuitt/puppet-module-conntrackd>
+* Official Puppet Style Guide <http://j.mp/fCVSng>
 
 ## License, Copyright
 
