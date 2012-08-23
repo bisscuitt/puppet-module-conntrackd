@@ -50,6 +50,7 @@ This module has got the following module dependencies:
 
 ```
   class  { "conntrackd::config":
+          sync_mode      => 'ALARM',
           protocol       => 'UDP',
           interface      => 'eth2',
           ipv4_address   => ${ipaddress_eth2},
