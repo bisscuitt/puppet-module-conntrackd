@@ -3,7 +3,7 @@
 class { "conntrackd::config":
 	protocol       => 'Multicast',
 	sync_mode      => 'FTFW',
-	interface      => 'eth0',
+	interface      => 'eth1',
 	ipv4_address   => '224.0.0.1',
 	ipv4_interface => '192.168.122.162',
 }
