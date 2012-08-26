@@ -319,35 +319,35 @@ class conntrackd::config (
 
   # sanity check some paramaters
   if $interface == undef {
-    fail("\"${::module_name}\": interface must be specified")
+    fail("\"${module_name}\": interface must be specified")
   }
 
   case $sync_mode {
     'FTFW', 'NOTRACK', 'ALARM': {}
     default: {
-      fail("\"${::module_name}\": sync_mode \"${sync_mode}\" set incorrectly. Must be one of: 'FTFW', 'NOTRACK', 'ALARM'")
+      fail("\"${module_name}\": sync_mode \"${sync_mode}\" set incorrectly. Must be one of: 'FTFW', 'NOTRACK', 'ALARM'")
     }
   }
 
   case $protocol {
     'Multicast': {
       if ( $ipv4_address == undef or $ipv4_interface == undef or $mcast_group == undef or $interface == undef ) {
-        fail("\"${::module_name}\": protocol \"${protocol}\" requires params: ipv4_address, ipv4_interface, mcast_group and interface to be specified")
+        fail("\"${module_name}\": protocol \"${protocol}\" requires params: ipv4_address, ipv4_interface, mcast_group and interface to be specified")
       }
     }
     'UDP': {
-      if ( ($::ipv4_address == undef) and ($::ipv6_address == undef) ) {
-        fail("\"${::module_name}\": protocol \"${protocol}\" requires atleast one of: ipv4_address, ipv6_address to be specified")
+      if ( ($ipv4_address == undef) and ($udp_ipv6_address == undef) ) {
+        fail("\"${module_name}\": protocol \"${protocol}\" requires atleast one of: ipv4_address, ipv6_address to be specified")
       }
-      if ( $::ipv4_address and ($::udp_ipv4_dest == undef) ) {
-        fail("\"${::module_name}\": protocol \"${protocol}\" udp_ipv4_dest must be specified if ipv4_address is specified")
+      if ( $ipv4_address and ($udp_ipv4_dest == undef) ) {
+        fail("\"${module_name}\": protocol \"${protocol}\" udp_ipv4_dest must be specified if ipv4_address is specified")
       }
-      if ( $::ipv6_address and ($::udp_ipv6_dest == undef) ) {
-        fail("\"${::module_name}\": protocol \"${protocol}\" udp_ipv6_dest must be specified if ipv6_address is specified")
+      if ( $udp_ipv6_address and ($udp_ipv6_dest == undef) ) {
+        fail("\"${module_name}\": protocol \"${protocol}\" udp_ipv6_dest must be specified if ipv6_address is specified")
       }
     }
     default: {
-        fail("\"${::module_name}\": protocol \"${protocol}\" set incorrectly. Must be one of: 'Multicast', 'UDP'")
+        fail("\"${module_name}\": protocol \"${protocol}\" set incorrectly. Must be one of: 'Multicast', 'UDP'")
     }
   }
 

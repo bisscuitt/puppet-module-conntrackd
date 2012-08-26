@@ -51,7 +51,7 @@ class conntrackd::params {
       $package = [ 'conntrackd' ]
     }
     default: {
-      fail("\"${::module_name}\" provides no package default value for \"${::operatingsystem}\"")
+      fail("\"${module_name}\" provides no package default value for \"${::operatingsystem}\"")
     }
   }
 
@@ -74,7 +74,7 @@ class conntrackd::params {
       $service_status     = '/usr/bin/pgrep conntrackd >/dev/null'
     }
     default: {
-      fail("\"${::module_name}\" provides no service parameters for \"${::operatingsystem}\"")
+      fail("\"${module_name}\" provides no service parameters for \"${::operatingsystem}\"")
     }
   }
 
