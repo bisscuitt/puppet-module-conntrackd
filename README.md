@@ -1,6 +1,6 @@
-# conntrackd
+# puppet-module-conntrackd
 
-Manages conntrackd to sync the iptables / netfilter conntrack tables between two or more nodes.
+Puppet module to manage conntrackd.
 
 Have a look at the main module class (<tt>init.pp</tt>) to see what this
 module does on a node plus usage examples.
