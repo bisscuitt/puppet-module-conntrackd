@@ -7,7 +7,7 @@
 ##
 # [*ensure*]
 #   String. Controls if the managed resources shall be <tt>present</tt> or
-#   <tt>absent</tt>. 
+#   <tt>absent</tt>.
 #   Default: <tt>present</tt>.
 #
 # [*autoupgrade*]
@@ -25,11 +25,11 @@
 #     You can use this to start a service on the first Puppet run instead of
 #     the system startup.
 #   * <tt>unmanaged</tt>: Service will not be started at boot time and Puppet
-#     does not care whether the service is running or not. 
-#   Default: <tt>enabled</tt>. 
+#     does not care whether the service is running or not.
+#   Default: <tt>enabled</tt>.
 #
 # [*nice*]
-#   integer: Nice value of the ocnntrackd process
+#   integer: Nice value of the conntrackd process
 #   range: <tt>-19</tt> to <tt>+19</tt>
 #   Default: <tt>-1</tt>
 #
@@ -42,13 +42,14 @@
 #   Default: <tt>2x the value of /proc/sys/net/netfilter/nf_conntrack_max</tt>
 #
 # [*logfile*]
-#   string:  fully qualified path to the logfile (directory must exist and be writable) or 'Off'
+#   string:  fully qualified path to the logfile or 'Off'
+#            (directory must exist and be writable)
 #   values:  <tt>on</tt>, <tt>off</tt>, <tt><path to file></tt>
 #   Default: <tt>off</tt>
 #
 # [*syslog*]
 #   string:  enable syslog logging
-#   values:  <tt>on</tt>, <tt>off</tt> or <tt><syslog facility></tt> 
+#   values:  <tt>on</tt>, <tt>off</tt> or <tt><syslog facility></tt>
 #   Default: <tt>on</tt>
 #
 # [*lockfile*]
@@ -64,11 +65,13 @@
 #   Default: <tt>20</tt>
 #
 # [*ignore_ips_ipv4*]
-#   array:   list of IPv4 addresses to ignore, this should include our own address
+#   array:   list of IPv4 addresses to ignore.
+#            should include this node's address
 #   Default: <tt>[ '127.0.0.1', '192.168.0.1', '10.1.1.1' ]</tt>
 #
 # [*ignore_ips_ipv6*]
-#   array:   list of IPvr addresses to ignore, this should include our own addresses
+#   array:   list of IPv4 addresses to ignore.
+#            should include this node's address
 #   Default: <tt>[ '::1' ]</tt>
 #
 # [*tcp_flows*]
@@ -107,7 +110,7 @@
 # [*eventiterationlimit*]
 #   integer: The daemon prioritizes the handling of state-change events coming
 #            from the core. With this clause, you can set the maximum number of
-#            state-change events (those coming from kernel-space) that the daemon
+#            state-change events (coming from kernel-space) that the daemon
 #            will handle after which it will handle other events coming from the
 #            network or userspace
 #   Default: <tt>100</tt>
@@ -133,12 +136,12 @@
 #   Default: <tt>Off</tt>
 #
 #  [*refresh_time*]
-#   integer: ALARM Mode: If a conntrack entry is not modified in <= 15 seconds, then
-#            a message is broadcasted.
+#   integer: ALARM Mode: If a conntrack entry is not modified in <= 15 seconds,
+#            then a message is broadcasted.
 #   Default: <tt>15</tt>
 #
 #  [*cache_timeout*]
-#   integer: If we don't receive a notification about the state of 
+#   integer: If we don't receive a notification about the state of
 #            an entry in the external cache after N seconds, then
 #            remove it.
 #   Default: <tt>180</tt>
@@ -151,17 +154,17 @@
 #
 #  [*purge_timeout*]
 #   integer: If the firewall replica goes from primary to backup,
-#            the conntrackd -t command is invoked in the script. 
+#            the conntrackd -t command is invoked in the script.
 #            This command schedules a flush of the table in N seconds.
 #   Default: <tt>60</tt>
 #
 #  [*protocol*]
 #   string:  The protocol to use for syncing.
-#   values:  <tt>Multicast</tt> or <tt>UDP</tt> 
+#   values:  <tt>Multicast</tt> or <tt>UDP</tt>
 #   Default: <tt>Multicast</tt>
 #
 #  [*interface*]
-#   string:  The dedicated physical interface to use for talking to the other host.
+#   string:  Dedicated physical interface for communicating with the other host.
 #   value:   <tt><interface name></tt>
 #   Default: <tt>undef</tt>
 #
@@ -211,7 +214,8 @@
 #
 #  [*filter_accept_protocols*]
 #   array:   Accept only certain protocols
-#   values:  <tt>TCP</tt>, <tt>SCTP</tt>, <tt>DCCP</tt>, <tt>UDP</tt>, <tt>ICMP</tt>, <tt>IPv6-ICMP</tt>
+#   values:  <tt>TCP</tt>, <tt>SCTP</tt>, <tt>DCCP</tt>,
+#            <tt>UDP</tt>, <tt>ICMP</tt>, <tt>IPv6-ICMP</tt>
 #   Default: <tt>[ 'TCP', 'SCTP', 'DCCP' ]</tt>
 #
 #  [*tcp_window_tracking*]
@@ -224,7 +228,7 @@
 #   Default: <tt>[ 'ESTABLISHED', 'CLOSED', 'TIME_WAIT', 'CLOSE_WAIT' ]</tt>
 #
 #  [*scheduler_type*]
-#   string:  Select a different scheduler for the daemon. 
+#   string:  Select a different scheduler for the daemon.
 #            See man sched_setscheduler(2) for more information. Using a RT
 #            scheduler reduces the chances to overrun the Netlink buffer.
 #   values:  <tt>RR</tt>, <tt>FIFO</tt>
@@ -237,7 +241,7 @@
 #
 #  [*stats_logfile*]
 #   string:  enable logging of stastics to a file
-#   values:  fully qualified path to the statis logfile (directory must exist and be writable) or 'Off'
+#   values:  fully qualified path to the statis logfile or 'Off'
 #   Default: <tt>undef</tt>
 #
 #  [*stats_netlink_reliable*]
@@ -248,13 +252,13 @@
 #
 #  [*stats_syslog*]
 #   string:  enable syslog logging of statistics
-#   values:  <tt>on</tt>, <tt>off</tt> or <tt><syslog facility></tt> 
+#   values:  <tt>on</tt>, <tt>off</tt> or <tt><syslog facility></tt>
 #
 # === Authors
 #
 # * Ian Bissett <mailto:bisscuitt@gmail.com>
 #
-class conntrackd::config ( 
+class conntrackd::config (
   $protocol                   = $conntrackd::params::protocol,
   $nice                       = $conntrackd::params::nice,
   $hashsize                   = $conntrackd::params::hashsize,
@@ -315,42 +319,42 @@ class conntrackd::config (
 
   # sanity check some paramaters
   if $interface == undef {
-    fail("\"${module_name}\": interface must be specified")
+    fail("\"${::module_name}\": interface must be specified")
   }
-  
+
   case $sync_mode {
     'FTFW', 'NOTRACK', 'ALARM': {}
     default: {
-      fail("\"${module_name}\": sync_mode \"${sync_mode}\" set incorrectly. Must be one of: 'FTFW', 'NOTRACK', 'ALARM'")
+      fail("\"${::module_name}\": sync_mode \"${sync_mode}\" set incorrectly. Must be one of: 'FTFW', 'NOTRACK', 'ALARM'")
     }
   }
 
   case $protocol {
     'Multicast': {
       if ( $ipv4_address == undef or $ipv4_interface == undef or $mcast_group == undef or $interface == undef ) {
-        fail("\"${module_name}\": protocol \"${protocol}\" requires params: ipv4_address, ipv4_interface, mcast_group and interface to be specified")
+        fail("\"${::module_name}\": protocol \"${protocol}\" requires params: ipv4_address, ipv4_interface, mcast_group and interface to be specified")
       }
     }
     'UDP': {
-      if ( ($ipv4_address == undef) and ($ipv6_address == undef) ) {
-        fail("\"${module_name}\": protocol \"${protocol}\" requires atleast one of: ipv4_address, ipv6_address to be specified")
+      if ( ($::ipv4_address == undef) and ($::ipv6_address == undef) ) {
+        fail("\"${::module_name}\": protocol \"${protocol}\" requires atleast one of: ipv4_address, ipv6_address to be specified")
       }
-      if ( $ipv4_address and ($udp_ipv4_dest == undef) ) {
-        fail("\"${module_name}\": protocol \"${protocol}\" udp_ipv4_dest must be specified if ipv4_address is specified")
+      if ( $::ipv4_address and ($::udp_ipv4_dest == undef) ) {
+        fail("\"${::module_name}\": protocol \"${protocol}\" udp_ipv4_dest must be specified if ipv4_address is specified")
       }
-      if ( $ipv6_address and ($udp_ipv6_dest == undef) ) {
-        fail("\"${module_name}\": protocol \"${protocol}\" udp_ipv6_dest must be specified if ipv6_address is specified")
+      if ( $::ipv6_address and ($::udp_ipv6_dest == undef) ) {
+        fail("\"${::module_name}\": protocol \"${protocol}\" udp_ipv6_dest must be specified if ipv6_address is specified")
       }
     }
     default: {
-        fail("\"${module_name}\": protocol \"${protocol}\" set incorrectly. Must be one of: 'Multicast', 'UDP'")
+        fail("\"${::module_name}\": protocol \"${protocol}\" set incorrectly. Must be one of: 'Multicast', 'UDP'")
     }
   }
 
   # manage config dir
   file { 'conntrackd-confdir':
-    path    => $conntrackd::params::config_dir,
     ensure  => $config_dir_exists,
+    path    => $conntrackd::params::config_dir,
     mode    => '0755',
   }
 

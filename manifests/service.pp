@@ -49,7 +49,7 @@ class conntrackd::service {
         $service_ensure = 'running'
         $service_enable = false
       }
-      # do not start service on boot, do not care whether currently running or not
+      # do not start service on boot, do not manage service
       'unmanaged': {
         $service_ensure = undef
         $service_enable = false

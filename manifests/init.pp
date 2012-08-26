@@ -90,12 +90,12 @@ class conntrackd (
   if ! ($status in [ 'enabled', 'disabled', 'running', 'unmanaged' ]) {
     fail("\"${status}\" is not a valid status parameter value")
   }
-  
+
   #### Manage actions
 
   # package
   class { 'conntrackd::package': }
-  
+
   # service
   class { 'conntrackd::service': }
 

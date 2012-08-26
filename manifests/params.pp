@@ -51,13 +51,14 @@ class conntrackd::params {
       $package = [ 'conntrackd' ]
     }
     default: {
-      fail("\"${module_name}\" provides no package default value for \"${::operatingsystem}\"")
+      fail("\"${::module_name}\" provides no package default value for \"${::operatingsystem}\"")
     }
   }
 
   # service parameters
   case $::operatingsystem {
-    # TODO: Include Init Script for RedHat systems -- FC15+ have a systemd service for conntrackd in their rpm package
+    # TODO: Include Init Script for RedHat systems
+    # -- FC15+ have a systemd service for conntrackd in their rpm package
     #'CentOS', 'Fedora', 'Scientific': {
     #  $service_name       = 'FIXME/TODO'
     #  $service_hasrestart = true
@@ -73,7 +74,7 @@ class conntrackd::params {
       $service_status     = '/usr/bin/pgrep conntrackd >/dev/null'
     }
     default: {
-      fail("\"${module_name}\" provides no service parameters for \"${::operatingsystem}\"")
+      fail("\"${::module_name}\" provides no service parameters for \"${::operatingsystem}\"")
     }
   }
 
@@ -84,8 +85,8 @@ class conntrackd::params {
   # Configuration file parameters
   # -- Set the hashlimit to be double the sysctl value of net.nf_conntrack_max
   #    uses custom fact defined in this module
-  if $nf_conntrack_max {
-      $hashlimit = $nf_conntrack_max * 2
+  if $::nf_conntrack_max {
+      $hashlimit = $::nf_conntrack_max * 2
   } else {
       $hashlimit = 131072
   }
@@ -95,7 +96,7 @@ class conntrackd::params {
   $logfile = 'off'
   $syslog = 'on'
   $lockfile = '/var/lock/conntrack.lock'
-  $sock_path = '/var/run/conntrackd.ctl' 
+  $sock_path = '/var/run/conntrackd.ctl'
   $sock_backlog = 20
   $ignore_ips_ipv4 = [ '127.0.0.1', '192.168.0.1', '10.1.1.1' ]
   $ignore_ips_ipv6 = [ '::1' ]
