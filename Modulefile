@@ -1,5 +1,5 @@
 name 'bisscuitt-conntrackd'
-version '1.0'
+version '1.0.0'
 author 'Ian Bissett'
 license 'Apache License 2.0'
 summary 'Manages conntrackd service'
