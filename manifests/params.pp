@@ -45,7 +45,7 @@ class conntrackd::params {
   # packages
   case $::osfamily {
     'RedHat': {
-      $package = [ 'contrack-tools' ]
+      $package = [ 'conntrack-tools' ]
     }
     'Debian': {
       $package = [ 'conntrackd' ]
@@ -79,7 +79,7 @@ class conntrackd::params {
   # location of configuration file
   $config_dir              = '/etc/conntrackd'
   $config_filename         = 'conntrackd.conf'
-  $primary-backup_filename = 'primary-backup.sh'
+  $primary_backup_filename = 'primary-backup.sh'
 
   # Configuration file parameters
   # -- Set the hashlimit to be double the sysctl value of net.nf_conntrack_max
