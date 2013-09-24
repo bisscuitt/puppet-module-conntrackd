@@ -389,10 +389,11 @@ class conntrackd::config (
 
     #init.d start file
     file { '/etc/rc.d/init.d/conntrackd':
-      ensure => $config_exists,
-      source => "puppet:///${module_name}/init.d/conntrackd", 
-      mode   => '0755',
-      before => Service['conntrackd'],
+      ensure  => $config_exists,
+      source  => "puppet:///${module_name}/init.d/conntrackd", 
+      mode    => '0755',
+      before  => Service['conntrackd'],
+      require => File['/etc/sysconfig/conntrackd'],
     }
   }
 }
