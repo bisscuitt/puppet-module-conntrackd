@@ -43,11 +43,11 @@ class conntrackd::params {
   #### Internal module values
 
   # packages
-  case $::operatingsystem {
-    'CentOS', 'Fedora', 'Scientific': {
-      $package = [ 'contrack-tools' ]
+  case $::osfamily {
+    'RedHat': {
+      $package = [ 'conntrack-tools' ]
     }
-    'Debian', 'Ubuntu': {
+    'Debian': {
       $package = [ 'conntrackd' ]
     }
     default: {
@@ -56,17 +56,15 @@ class conntrackd::params {
   }
 
   # service parameters
-  case $::operatingsystem {
-    # TODO: Include Init Script for RedHat systems
-    # -- FC15+ have a systemd service for conntrackd in their rpm package
-    #'CentOS', 'Fedora', 'Scientific': {
-    #  $service_name       = 'FIXME/TODO'
-    #  $service_hasrestart = true
-    #  $service_hasstatus  = true
-    #  $service_pattern    = $service_name
-    #  $service_status     = '/usr/bin/pgrep conntrackd >/dev/null'
-    #}
-    'Debian', 'Ubuntu': {
+  case $::osfamily {
+    'RedHat': {
+      $service_name       = 'conntrackd'
+      $service_hasrestart = true
+      $service_hasstatus  = true
+      $service_pattern    = $service_name
+      $service_status     = '/usr/bin/pgrep conntrackd >/dev/null'
+    }
+    'Debian': {
       $service_name       = 'conntrackd'
       $service_hasrestart = true
       $service_hasstatus  = true
@@ -79,8 +77,9 @@ class conntrackd::params {
   }
 
   # location of configuration file
-  $config_dir      = '/etc/conntrackd'
-  $config_filename = 'conntrackd.conf'
+  $config_dir              = '/etc/conntrackd'
+  $config_filename         = 'conntrackd.conf'
+  $primary_backup_filename = 'primary-backup.sh'
 
   # Configuration file parameters
   # -- Set the hashlimit to be double the sysctl value of net.nf_conntrack_max

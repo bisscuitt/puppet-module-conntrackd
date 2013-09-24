@@ -70,7 +70,7 @@ You can find more examples in the examples dir.
 
 ## TODO
 
-* Add support for RedHat based systems 
+* Add support for RedHat based systems  -  First pass done.  Based on custom built package v0.9.13
 
 ## Links
 

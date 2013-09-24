@@ -1,0 +1,58 @@
+#!/bin/bash
+#
+# conntrackd    Start conntrackd using /etc/conntrackd/conntrackd.conf
+#
+#               Written by Max Kellermann <max@duempel.org>
+#
+#   Linux chkconfig stuff:
+#
+#   chkconfig: 2345 25 10 
+#   description: Startup/shutdown script for conntrackd.
+#
+#
+### BEGIN INIT INFO
+# Provides:          conntrackd
+# Required-Start:    $network $syslog $remote_fs
+# Required-Stop:     $network $syslog $remote_fs
+# Default-Start:     2 3 4 5 
+# Default-Stop:	     0 1 6 
+# Description: Starts conntrackd
+# short-description: Starts conntrackd
+### END INIT INFO
+
+#source function library
+. /etc/rc.d/init.d/functions
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/conntrackd
+
+test -x $DAEMON || exit 0
+
+CONFIG=/etc/conntrackd/conntrackd.conf
+OPTIONS=""
+
+test -f /etc/sysconfig/conntrackd && . /etc/sysconfig/conntrackd
+
+test -f $CONFIG || exit 0
+
+case "$1" in
+    start)
+        echo -n $"Starting conntrackd: "
+            $DAEMON -d -C "$CONFIG" $OPTIONS && success || failure
+        ;;
+    stop)
+        echo -n $"Stopping conntrackd: "
+        $DAEMON -C "$CONFIG" -k && success || failure
+        ;;
+    restart|force-reload)
+        $0 stop
+        sleep 1
+        $0 start
+        ;;
+    *)
+        echo $"Usage: /etc/init.d/conntrackd {start|stop|restart|force-reload}"
+        exit 1
+        ;;
+esac
+
+exit 0

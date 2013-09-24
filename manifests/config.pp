@@ -359,12 +359,47 @@ class conntrackd::config (
   }
 
   # configuration file
+
+  $conntrackd_conf_erb = $::osfamily ? {
+    'RedHat'  => 'conntrackd.conf.RedHat.erb',
+    default   => 'conntrackd.conf.erb',
+  }
+
   file { 'conntrackd-config':
     ensure  => $config_exists,
     path    => "${conntrackd::params::config_dir}/${conntrackd::params::config_filename}",
-    content => template('conntrackd/conntrackd.conf.erb'),
+    content => template("${module_name}/${conntrackd::config::conntrackd_conf_erb}"),
     mode    => '0644',
     require => File['conntrackd-confdir'],
     notify  => Service['conntrackd'],
+  }
+
+  # conntrack-tools needs a hand
+  if $::osfamily == 'RedHat' {
+
+    #primary-backup.sh for use with keepalived 
+    file { 'primary-backup.sh':
+      ensure  => $config_exists,
+      path    => "${conntrackd::params::config_dir}/${conntrackd::params::primary_backup_filename}",
+      source  => "puppet:///modules/${module_name}/primary-backup.sh",
+      mode    => '0755',
+      require => File['conntrackd-confdir'],
+    }
+
+    #conntrackd options file
+    file { '/etc/sysconfig/conntrackd':
+      ensure => $config_exists,
+      source => "puppet:///modules/${module_name}/sysconfig/conntrackd",
+      mode   => '0644',
+    }  
+
+    #init.d start file
+    file { '/etc/rc.d/init.d/conntrackd':
+      ensure  => $config_exists,
+      source  => "puppet:///modules/${module_name}/init.d/conntrackd", 
+      mode    => '0755',
+      before  => Service['conntrackd'],
+      require => File['/etc/sysconfig/conntrackd'],
+    }
   }
 }
