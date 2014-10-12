@@ -1,104 +1,104 @@
 Sync {
-	Mode <%= sync_mode %> {
+	Mode <%= @sync_mode %> {
 <% if sync_mode == 'FTFW' -%>
-		ResendQueueSize <%= resend_queue_size %>
-		ACKWindowSize <%= ack_window_size %>
-		DisableExternalCache <%= disable_external_cache %>
+		ResendQueueSize <%= @resend_queue_size %>
+		ACKWindowSize <%= @ack_window_size %>
+		DisableExternalCache <%= @disable_external_cache %>
 <% elsif sync_mode == 'NOTRACK' -%>
-		DisableInternalCache <%= disable_internal_cache %>
-		DisableExternalCache <%= disable_external_cache %>
+		DisableInternalCache <%= @disable_internal_cache %>
+		DisableExternalCache <%= @disable_external_cache %>
 <% elsif sync_mode == 'ALARM' -%>
-        RefreshTime <%= refresh_time %>
-        CacheTimeout <%= cache_timeout %>
+        RefreshTime <%= @refresh_time %>
+        CacheTimeout <%= @cache_timeout %>
 <% end -%>
-		CommitTimeout <%= commit_timeout %>
-		PurgeTimeout <%= purge_timeout %>
+		CommitTimeout <%= @commit_timeout %>
+		PurgeTimeout <%= @purge_timeout %>
 	}
 
 <% if protocol == 'Multicast' -%>
 	Multicast {
-		IPv4_address <%= ipv4_address %>
-		Group <%= mcast_group %>
-		IPv4_interface <%= ipv4_interface %>
-		Interface <%= interface %>
-		SndSocketBuffer <%= sndsocketbuffer %>
-		RcvSocketBuffer <%= rcvsocketbuffer %>
-		Checksum <%= checksum %>
+		IPv4_address <%= @ipv4_address %>
+		Group <%= @mcast_group %>
+		IPv4_interface <%= @ipv4_interface %>
+		Interface <%= @interface %>
+		SndSocketBuffer <%= @sndsocketbuffer %>
+		RcvSocketBuffer <%= @rcvsocketbuffer %>
+		Checksum <%= @checksum %>
 	}
 <%   elsif protocol == 'UDP' -%>
 	UDP {
 <%   if @ipv4_address -%>
-		IPv4_address <%= ipv4_address %>
-		IPv4_Destination_Address <%= udp_ipv4_dest %>
+		IPv4_address <%= @ipv4_address %>
+		IPv4_Destination_Address <%= @udp_ipv4_dest %>
 <%   elsif @ipv6_address -%>
-		IPv6_address <%= udp_ipv6_address %>
-		IPv6_Destination_Address <%= udp_ipv6_dest %>
+		IPv6_address <%= @udp_ipv6_address %>
+		IPv6_Destination_Address <%= @udp_ipv6_dest %>
 <%   end -%>
-		Port <%= udp_port %>
-		Interface <%= interface %>
-		SndSocketBuffer <%= sndsocketbuffer %>
-		RcvSocketBuffer <%= rcvsocketbuffer %>
-		Checksum <%= checksum %>
+		Port <%= @udp_port %>
+		Interface <%= @interface %>
+		SndSocketBuffer <%= @sndsocketbuffer %>
+		RcvSocketBuffer <%= @rcvsocketbuffer %>
+		Checksum <%= @checksum %>
 	}
 <% end -%>
 
 	Options {
-		TCPWindowTracking <%= tcp_window_tracking %>
+		TCPWindowTracking <%= @tcp_window_tracking %>
 	}
 }
 
 General {
-	Nice <%= nice %>
+	Nice <%= @nice %>
 
 	Scheduler {
-		Type <%= scheduler_type %>
-		Priority <%= scheduler_priority %>
+		Type <%= @scheduler_type %>
+		Priority <%= @scheduler_priority %>
 	}
 
-	HashSize <%= hashsize %>
-	HashLimit <%= hashlimit %>
-	LogFile <%= logfile %>
-	Syslog <%= syslog %>
-	LockFile <%= lockfile %>
+	HashSize <%= @hashsize %>
+	HashLimit <%= @hashlimit %>
+	LogFile <%= @logfile %>
+	Syslog <%= @syslog %>
+	LockFile <%= @lockfile %>
 
 	UNIX {
-		Path <%= sock_path %>
-		Backlog <%= sock_backlog %>
+		Path <%= @sock_path %>
+		Backlog <%= @sock_backlog %>
 	}
 
-	NetlinkBufferSize <%= netlinkbuffersize %>
-	NetlinkBufferSizeMaxGrowth <%= netlinkbuffersizemaxgrowth %>
-	NetlinkOverrunResync <%= netlinkoverrunresync %>
-	NetlinkEventsReliable <%= netlinkeventsreliable %>
+	NetlinkBufferSize <%= @netlinkbuffersize %>
+	NetlinkBufferSizeMaxGrowth <%= @netlinkbuffersizemaxgrowth %>
+	NetlinkOverrunResync <%= @netlinkoverrunresync %>
+	NetlinkEventsReliable <%= @netlinkeventsreliable %>
 <% if @pollsecs -%>
-	PollSecs <%= pollsecs %>
+	PollSecs <%= @pollsecs %>
 <% end -%>
-	EventIterationLimit <%= eventiterationlimit %>
+	EventIterationLimit <%= @eventiterationlimit %>
 
 	Filter From Userspace {
 		Protocol Accept {
-<% filter_accept_protocols.each do |proto| -%>
+<% @filter_accept_protocols.each do |proto| -%>
                     <%= proto %>
 <% end -%>
 		}
 
 		Address Ignore {
-<% ignore_ips_ipv4.each do |address| -%>
+<% @ignore_ips_ipv4.each do |address| -%>
 			IPv4_address <%= address %>
 <% end -%>
-<% ignore_ips_ipv6.each do |address| -%>
+<% @ignore_ips_ipv6.each do |address| -%>
 			IPv6_address <%= address %>
 <% end -%>
 		}
 		State Accept {
-			<%= track_tcp_states.join(' ') %> for TCP
+			<%= @track_tcp_states.join(' ') %> for TCP
 		}
 	}
 }
 <% if @stats_logfile or @stats_syslog %>
 Stats {
-    LogFile <%= stats_logfile %>
-    NetlinkEventsReliable <%= stats_netlink_reliable %>
-    Syslog <%= stats_syslog %>
+    LogFile <%= @stats_logfile %>
+    NetlinkEventsReliable <%= @stats_netlink_reliable %>
+    Syslog <%= @stats_syslog %>
 }
 <% end -%>
