@@ -1,13 +1,13 @@
 Sync {
 	Mode <%= @sync_mode %> {
-<% if sync_mode == 'FTFW' -%>
+<% if @sync_mode == 'FTFW' -%>
 		ResendQueueSize <%= @resend_queue_size %>
 		ACKWindowSize <%= @ack_window_size %>
 		DisableExternalCache <%= @disable_external_cache %>
-<% elsif sync_mode == 'NOTRACK' -%>
+<% elsif @sync_mode == 'NOTRACK' -%>
 		DisableInternalCache <%= @disable_internal_cache %>
 		DisableExternalCache <%= @disable_external_cache %>
-<% elsif sync_mode == 'ALARM' -%>
+<% elsif @sync_mode == 'ALARM' -%>
         RefreshTime <%= @refresh_time %>
         CacheTimeout <%= @cache_timeout %>
 <% end -%>
@@ -15,7 +15,7 @@ Sync {
 		PurgeTimeout <%= @purge_timeout %>
 	}
 
-<% if protocol == 'Multicast' -%>
+<% if @protocol == 'Multicast' -%>
 	Multicast {
 		IPv4_address <%= @ipv4_address %>
 		Group <%= @mcast_group %>
@@ -25,7 +25,7 @@ Sync {
 		RcvSocketBuffer <%= @rcvsocketbuffer %>
 		Checksum <%= @checksum %>
 	}
-<%   elsif protocol == 'UDP' -%>
+<%   elsif @protocol == 'UDP' -%>
 	UDP {
 <%   if @ipv4_address -%>
 		IPv4_address <%= @ipv4_address %>
