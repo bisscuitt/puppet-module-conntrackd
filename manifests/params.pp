@@ -44,8 +44,8 @@ class conntrackd::params {
 
   # packages
   case $::operatingsystem {
-    'CentOS', 'Fedora', 'Scientific': {
-      $package = [ 'contrack-tools' ]
+    'CentOS', 'RedHat', 'Fedora', 'Scientific': {
+      $package = [ 'conntrack-tools' ]
     }
     'Debian', 'Ubuntu': {
       $package = [ 'conntrackd' ]
@@ -57,15 +57,13 @@ class conntrackd::params {
 
   # service parameters
   case $::operatingsystem {
-    # TODO: Include Init Script for RedHat systems
-    # -- FC15+ have a systemd service for conntrackd in their rpm package
-    #'CentOS', 'Fedora', 'Scientific': {
-    #  $service_name       = 'FIXME/TODO'
-    #  $service_hasrestart = true
-    #  $service_hasstatus  = true
-    #  $service_pattern    = $service_name
-    #  $service_status     = '/usr/bin/pgrep conntrackd >/dev/null'
-    #}
+    'CentOS', 'RedHat', 'Fedora', 'Scientific': {
+      $service_name       = 'conntrackd'
+      $service_hasrestart = true
+      $service_hasstatus  = true
+      $service_pattern    = $service_name
+      $service_status     = '/usr/bin/pgrep conntrackd >/dev/null'
+    }
     'Debian', 'Ubuntu': {
       $service_name       = 'conntrackd'
       $service_hasrestart = true
