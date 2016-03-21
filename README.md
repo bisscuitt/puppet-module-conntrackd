@@ -10,10 +10,9 @@ module does on a node plus usage examples.
 
 Supports both ipv4 and ipv6, all conntrackd options and all sync modes.
 
-Tested and working with Ubuntu 12.04 and Debian Squeeze.
+Compatible with Debian, Ubuntu and RedHat, Fedora, Centos, Scientific distros.
 
 This module is designed to work with Puppet version 2.7.x or newer.
-
 
 ## Requirements
 
@@ -67,10 +66,6 @@ This module has got the following module dependencies:
 ```
 
 You can find more examples in the examples dir.
-
-## TODO
-
-* Add support for RedHat based systems 
 
 ## Links
 
