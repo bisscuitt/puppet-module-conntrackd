@@ -119,7 +119,7 @@ class conntrackd::params {
 
   $protocol = 'Multicast'
   $interface = undef
-  $ipv4_address = '255.0.0.50'
+  $ipv4_address = '225.0.0.50'
   $ipv4_interface = undef
   $mcast_group = '3780'
   $sndsocketbuffer = 1249280
