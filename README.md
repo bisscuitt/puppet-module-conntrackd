@@ -59,7 +59,7 @@ This module has got the following module dependencies:
 
 ### Remove service, package and configuration of conntrackd:
 
-````
+```
   class  { "conntrackd":
           ensure         => 'absent'
   }
