@@ -83,7 +83,7 @@ class conntrackd::params {
   # Configuration file parameters
   # -- Set the hashlimit to be double the sysctl value of net.nf_conntrack_max
   #    uses custom fact defined in this module
-  if $::nf_conntrack_max {
+  if getvar('::nf_conntrack_max') {
       $hashlimit = $::nf_conntrack_max * 2
   } else {
       $hashlimit = 131072
