@@ -45,11 +45,11 @@ Sync {
   Options {
     TCPWindowTracking <%= @tcp_window_tracking %>
 <% if @expectation_sync.kind_of?(Array) -%>
-      ExpectationSync {
+    ExpectationSync {
   <%- @expectation_sync.each do |sync| -%>
-        <%= sync %>
+      <%= sync %>
   <%- end -%>
-      }
+    }
 <% else -%>
       ExpectationSync <%= @expectation_sync %>
 <% end -%>
