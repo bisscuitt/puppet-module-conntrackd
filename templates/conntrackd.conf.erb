@@ -99,12 +99,12 @@ General {
 
 <% if @kernel_ignore_ips_ipv4.length + @kernel_ignore_ips_ipv6.length > 0 -%>
     Address Ignore {
-  <% @kernel_ignore_ips_ipv4.each do |address| -%>
+  <%- @kernel_ignore_ips_ipv4.each do |address| -%>
       IPv4_address <%= address %>
-  <% end -%>
-  <% @kernel_ignore_ips_ipv6.each do |address| -%>
+  <%- end -%>
+  <%- @kernel_ignore_ips_ipv6.each do |address| -%>
       IPv6_address <%= address %>
-  <% end -%>
+  <%- end -%>
     }
 <% end -%>
 <% if @kernel_track_tcp_states.length > 0 -%>
