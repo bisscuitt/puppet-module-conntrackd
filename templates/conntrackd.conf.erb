@@ -44,6 +44,15 @@ Sync {
 
 	Options {
 		TCPWindowTracking <%= @tcp_window_tracking %>
+<% if @expetation_sync.kind_of?(Array) -%>
+    ExpectationSync {
+  <%- @expectation_sync.each do |sync| -%>
+      <%= sync %>
+  <%- end -%>
+    }
+<% else -%>
+    ExpectationSync <%= @expectation_sync %>
+<% end -%>
 	}
 }
 
@@ -75,24 +84,60 @@ General {
 <% end -%>
 	EventIterationLimit <%= @eventiterationlimit %>
 
-	Filter From Userspace {
-		Protocol Accept {
-<% @filter_accept_protocols.each do |proto| -%>
-                    <%= proto %>
+<% if @systemd -%>
+  Systemd on
 <% end -%>
-		}
 
-		Address Ignore {
-<% @ignore_ips_ipv4.each do |address| -%>
-			IPv4_address <%= address %>
-<% end -%>
-<% @ignore_ips_ipv6.each do |address| -%>
-			IPv6_address <%= address %>
-<% end -%>
+	Filter From Kernelspace {
+<% if @kernel_filter_accept_protocols -%>
+		Protocol Accept {
+  <% @kernel_filter_accept_protocols.each do |proto| -%>
+                    <%= proto %>
+  <% end -%>
 		}
+<% end -%>
+
+<% if @kernel_ignore_ips_ipv4 || @kernel_ignore_ips_ipv6 -%>
+		Address Ignore {
+  <% @kernel_ignore_ips_ipv4.each do |address| -%>
+			IPv4_address <%= address %>
+  <% end -%>
+  <% @kernel_ignore_ips_ipv6.each do |address| -%>
+			IPv6_address <%= address %>
+  <% end -%>
+		}
+<% end -%>
+<% if @kernel_track_tcp_states -%>
+		State Accept {
+			<%= @kernel_track_tcp_states.join(' ') %> for TCP
+		}
+<% end -%>
+	}
+
+	Filter From Userspace {
+<% if @filter_accept_protocols -%>
+		Protocol Accept {
+  <% @filter_accept_protocols.each do |proto| -%>
+                    <%= proto %>
+  <% end -%>
+		}
+<% end -%>
+
+<% if @ignore_ips_ipv4 || @ignore_ips_ipv6 -%>
+		Address Ignore {
+  <% @ignore_ips_ipv4.each do |address| -%>
+			IPv4_address <%= address %>
+  <% end -%>
+  <% @ignore_ips_ipv6.each do |address| -%>
+			IPv6_address <%= address %>
+  <% end -%>
+		}
+<% end -%>
+<% if @track_tcp_states -%>
 		State Accept {
 			<%= @track_tcp_states.join(' ') %> for TCP
 		}
+<% end -%>
 	}
 }
 <% if @stats_logfile or @stats_syslog %>

@@ -142,4 +142,11 @@ class conntrackd::params {
   $stats_netlink_reliable = 'Off'
   $stats_syslog = undef
 
+  $systemd = false
+  $expectation_sync = 'Off'
+
+  $kernel_ignore_ips_ipv4 = [ '127.0.0.1', '192.168.0.1', '10.1.1.1' ]
+  $kernel_ignore_ips_ipv6 = [ '::1' ]
+  $kernel_track_tcp_states = [ 'ESTABLISHED', 'CLOSED', 'TIME_WAIT', 'CLOSE_WAIT' ]
+  $kernel_filter_accept_protocols = [ 'TCP', 'SCTP', 'DCCP' ]
 }
