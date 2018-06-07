@@ -89,7 +89,7 @@ General {
 <% end -%>
 
 	Filter From Kernelspace {
-<% if @kernel_filter_accept_protocols.lenght > 0 -%>
+<% if @kernel_filter_accept_protocols.length > 0 -%>
 		Protocol Accept {
   <% @kernel_filter_accept_protocols.each do |proto| -%>
                     <%= proto %>
@@ -97,7 +97,7 @@ General {
 		}
 <% end -%>
 
-<% if @kernel_ignore_ips_ipv4.lenght + @kernel_ignore_ips_ipv6.lenght > 0 -%>
+<% if @kernel_ignore_ips_ipv4.length + @kernel_ignore_ips_ipv6.length > 0 -%>
 		Address Ignore {
   <% @kernel_ignore_ips_ipv4.each do |address| -%>
 			IPv4_address <%= address %>
@@ -107,7 +107,7 @@ General {
   <% end -%>
 		}
 <% end -%>
-<% if @kernel_track_tcp_states.lenght > 0 -%>
+<% if @kernel_track_tcp_states.length > 0 -%>
 		State Accept {
 			<%= @kernel_track_tcp_states.join(' ') %> for TCP
 		}
@@ -115,7 +115,7 @@ General {
 	}
 
 	Filter From Userspace {
-<% if @filter_accept_protocols.lenght > 0 -%>
+<% if @filter_accept_protocols.length > 0 -%>
 		Protocol Accept {
   <% @filter_accept_protocols.each do |proto| -%>
                     <%= proto %>
@@ -123,7 +123,7 @@ General {
 		}
 <% end -%>
 
-<% if @ignore_ips_ipv4.lenght + @ignore_ips_ipv6.lenght > 0-%>
+<% if @ignore_ips_ipv4.length + @ignore_ips_ipv6.length > 0-%>
 		Address Ignore {
   <% @ignore_ips_ipv4.each do |address| -%>
 			IPv4_address <%= address %>
@@ -133,7 +133,7 @@ General {
   <% end -%>
 		}
 <% end -%>
-<% if @track_tcp_states.lenght > 0 -%>
+<% if @track_tcp_states.length > 0 -%>
 		State Accept {
 			<%= @track_tcp_states.join(' ') %> for TCP
 		}
