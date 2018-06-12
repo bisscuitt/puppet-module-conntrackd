@@ -388,6 +388,16 @@ class conntrackd::config (
     }
   }
 
+  if $expectation_sync.is_a(String) {
+    case $expectation_sync {
+      'On', 'Off': {}
+      default:
+        fail("\"${module_name}\": expectation_sync \"${expectation_sync}\" set incorrectly: Must be one of: 'On', 'Off'")
+    }
+  } else if !$expectation_sync.is_a(Array) {
+    fail("\"${module_name}\": expectation_sync must be String or Array")
+  }
+
   # manage config dir
   file { 'conntrackd-confdir':
     ensure  => $config_dir_exists,
