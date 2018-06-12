@@ -395,7 +395,7 @@ class conntrackd::config (
         fail("\"${module_name}\": expectation_sync \"${expectation_sync}\" set incorrectly: Must be one of: 'On', 'Off'")
       }
     }
-  } else if !$expectation_sync.is_a(Array) {
+  } elsif !$expectation_sync.is_a(Array) {
     fail("\"${module_name}\": expectation_sync must be String or Array")
   }
 
