@@ -257,7 +257,7 @@
 #  [*systemd*]
 #   boolean: Whether to use systemd mode or not
 #   values: <tt>true</tt>, <tt>false</tt>
-#   Default: <tt>OS compatible</tt>
+#   Default: <tt>false</tt>
 #
 #  [*expectation_sync*]
 #   String of Array of expectation sync. If value is a string it must
