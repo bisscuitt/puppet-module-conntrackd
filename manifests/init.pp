@@ -75,15 +75,15 @@ class conntrackd (
   Boolean                   $autoupgrade = $conntrackd::params::autoupgrade,
   Enum['enabled', 'disabled',
     'running', 'unmanaged'] $status      = $conntrackd::params::status,
-  ) inherits conntrackd::params {
+) inherits conntrackd::params {
 
   #### Manage actions
 
   # package
-  class { 'conntrackd::package': }
+  include ::conntrackd::package
 
   # service
-  class { 'conntrackd::service': }
+  include ::conntrackd::service
 
   #### Manage relationships
 
