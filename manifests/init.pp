@@ -71,33 +71,19 @@
 # * Ian Bissett <mailto:bisscuitt@gmail.com>
 #
 class conntrackd (
-  $ensure                     = $conntrackd::params::ensure,
-  $autoupgrade                = $conntrackd::params::autoupgrade,
-  $status                     = $conntrackd::params::status,
-  ) inherits conntrackd::params {
-
-  #### Validate parameters
-
-  # ensure
-  if ! ($ensure in [ 'present', 'absent' ]) {
-    fail("\"${ensure}\" is not a valid ensure parameter value")
-  }
-
-  # autoupgrade
-  validate_bool($autoupgrade)
-
-  # service status
-  if ! ($status in [ 'enabled', 'disabled', 'running', 'unmanaged' ]) {
-    fail("\"${status}\" is not a valid status parameter value")
-  }
+  Enum['present','absent']  $ensure      = $conntrackd::params::ensure,
+  Boolean                   $autoupgrade = $conntrackd::params::autoupgrade,
+  Enum['enabled', 'disabled',
+    'running', 'unmanaged'] $status      = $conntrackd::params::status,
+) inherits conntrackd::params {
 
   #### Manage actions
 
   # package
-  class { 'conntrackd::package': }
+  include ::conntrackd::package
 
   # service
-  class { 'conntrackd::service': }
+  include ::conntrackd::service
 
   #### Manage relationships
 
