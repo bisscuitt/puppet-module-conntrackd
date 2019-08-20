@@ -1,0 +1,16 @@
+{
+  "name": "bisscuitt-conntrackd",
+  "version": "2.0.0",
+  "author": "bisscuitt",
+  "summary": "Manages conntrackd service",
+  "license": "Apache License 2.0",
+  "source": "git://github.com/bisscuitt/puppet-module-conntrackd.git",
+  "description": "Install and manages to conntrackd service to help manage stateful firewall failover",
+  "project_page": "https://github.com/bisscuitt/puppet-module-conntrackd",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 4.19.0 < 7.0.0"
+    }
+  ]
+}
