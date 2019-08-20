@@ -1,5 +1,5 @@
 # Remove any trace of conntrackd
 
-class { "conntrackd":
-	ensure       => 'absent',
+class { 'conntrackd':
+  ensure       => 'absent',
 }

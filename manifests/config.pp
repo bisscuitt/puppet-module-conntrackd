@@ -353,9 +353,9 @@ class conntrackd::config (
 
   # manage config dir
   file { 'conntrackd-confdir':
-    ensure  => $config_dir_exists,
-    path    => $conntrackd::params::config_dir,
-    mode    => '0755',
+    ensure => $config_dir_exists,
+    path   => $conntrackd::params::config_dir,
+    mode   => '0755',
   }
 
   # configuration file
