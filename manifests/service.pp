@@ -27,6 +27,7 @@
 # * Ian Bissett <mailto:bisscuitt@gmail.com>
 #
 class conntrackd::service {
+  assert_private()
 
   #### Service management
 
@@ -76,11 +77,11 @@ class conntrackd::service {
   service { 'conntrackd':
     ensure     => $service_ensure,
     enable     => $service_enable,
-    name       => $conntrackd::params::service_name,
-    hasstatus  => $conntrackd::params::service_hasstatus,
-    hasrestart => $conntrackd::params::service_hasrestart,
-    pattern    => $conntrackd::params::service_pattern,
-    status     => $conntrackd::params::service_status,
+    name       => $conntrackd::service_name,
+    hasstatus  => $conntrackd::service_hasstatus,
+    hasrestart => $conntrackd::service_hasrestart,
+    pattern    => $conntrackd::service_pattern,
+    status     => $conntrackd::service_status,
   }
 
 }

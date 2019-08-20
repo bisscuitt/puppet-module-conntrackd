@@ -23,6 +23,7 @@
 # * Ian Bissett <mailto:bisscuitt@gmail.com>
 #
 class conntrackd::package {
+  assert_private()
 
   #### Package management
 
@@ -40,7 +41,7 @@ class conntrackd::package {
   }
 
   # action
-  package { $conntrackd::params::package:
+  package { $conntrackd::package:
     ensure => $package_ensure,
   }
 

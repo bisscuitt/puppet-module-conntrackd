@@ -259,50 +259,55 @@
 # * Ian Bissett <mailto:bisscuitt@gmail.com>
 #
 class conntrackd::config (
-  $protocol                   = $conntrackd::params::protocol,
-  $nice                       = $conntrackd::params::nice,
-  $hashsize                   = $conntrackd::params::hashsize,
-  $hashlimit                  = $conntrackd::params::hashlimit,
-  $logfile                    = $conntrackd::params::logfile,
-  $syslog                     = $conntrackd::params::syslog,
-  $lockfile                   = $conntrackd::params::lockfile,
-  $sock_path                  = $conntrackd::params::sock_path,
-  $sock_backlog               = $conntrackd::params::sock_backlog,
-  $ignore_ips_ipv4            = $conntrackd::params::ignore_ips_ipv4,
-  $ignore_ips_ipv6            = $conntrackd::params::ignore_ips_ipv6,
-  $tcp_flows                  = $conntrackd::params::tcp_flows,
-  $netlinkbuffersize          = $conntrackd::params::netlinkbuffersize,
-  $netlinkbuffersizemaxgrowth = $conntrackd::params::netlinkbuffersizemaxgrowth,
-  $netlinkoverrunresync       = $conntrackd::params::netlinkoverrunresync,
-  $netlinkeventsreliable      = $conntrackd::params::netlinkeventsreliable,
-  $pollsecs                   = $conntrackd::params::pollsecs,
-  $eventiterationlimit        = $conntrackd::params::eventiterationlimit,
-  $sync_mode                  = $conntrackd::params::sync_mode,
-  $resend_queue_size          = $conntrackd::params::resend_queue_size,
-  $ack_window_size            = $conntrackd::params::ack_window_size,
-  $disable_external_cache     = $conntrackd::params::disable_external_cache,
-  $disable_internal_cache     = $conntrackd::params::disable_internal_cache,
-  $refresh_time               = $conntrackd::params::refresh_time,
-  $cache_timeout              = $conntrackd::params::cache_timeout,
-  $commit_timeout             = $conntrackd::params::commit_timeout,
-  $purge_timeout              = $conntrackd::params::purge_timeout,
-  $interface                  = $conntrackd::params::interface,
-  $ipv4_address               = $conntrackd::params::ipv4_address,
-  $ipv4_interface             = $conntrackd::params::ipv4_interface,
-  $mcast_group                = $conntrackd::params::mcast_group,
-  $sndsocketbuffer            = $conntrackd::params::sndsocketbuffer,
-  $rcvsocketbuffer            = $conntrackd::params::rcvsocketbuffer,
-  $checksum                   = $conntrackd::params::checksum,
-  $udp_ipv6_address           = $conntrackd::params::udp_ipv6_address,
-  $udp_ipv4_dest              = $conntrackd::params::udp_ipv4_dest,
-  $udp_ipv6_dest              = $conntrackd::params::udp_ipv6_dest,
-  $udp_port                   = $conntrackd::params::udp_port,
-  $filter_accept_protocols    = $conntrackd::params::filter_accept_protocols,
-  $tcp_window_tracking        = $conntrackd::params::tcp_window_tracking,
-  $track_tcp_states           = $conntrackd::params::track_tcp_states,
-  $scheduler_type             = $conntrackd::params::scheduler_type,
-  $scheduler_priority         = $conntrackd::params::scheduler_priority,
-  ) inherits conntrackd {
+  Enum['Multicast', 'UDP']         $protocol                   = $conntrackd::protocol,
+  Integer[-20,19]                  $nice                       = $conntrackd::nice,
+  Integer                          $hashsize                   = $conntrackd::hashsize,
+  Integer                          $hashlimit                  = $conntrackd::_hashlimit,
+  String                           $logfile                    = $conntrackd::logfile,
+  String                           $syslog                     = $conntrackd::syslog,
+  String                           $lockfile                   = $conntrackd::lockfile,
+  String                           $sock_path                  = $conntrackd::sock_path,
+  Integer                          $sock_backlog               = $conntrackd::sock_backlog,
+  Array                            $ignore_ips_ipv4            = $conntrackd::ignore_ips_ipv4,
+  Array                            $ignore_ips_ipv6            = $conntrackd::ignore_ips_ipv6,
+  Array                            $tcp_flows                  = $conntrackd::tcp_flows,
+  Integer                          $netlinkbuffersize          = $conntrackd::netlinkbuffersize,
+  Integer                          $netlinkbuffersizemaxgrowth = $conntrackd::netlinkbuffersizemaxgrowth,
+  String                           $netlinkoverrunresync       = $conntrackd::netlinkoverrunresync,
+  String                           $netlinkeventsreliable      = $conntrackd::netlinkeventsreliable,
+  Optional[Integer]                $pollsecs                   = $conntrackd::pollsecs,
+  Integer                          $eventiterationlimit        = $conntrackd::eventiterationlimit,
+  Enum['FTFW', 'NOTRACK', 'ALARM'] $sync_mode                  = $conntrackd::sync_mode,
+  Integer                          $resend_queue_size          = $conntrackd::resend_queue_size,
+  Integer                          $ack_window_size            = $conntrackd::ack_window_size,
+  String                           $disable_external_cache     = $conntrackd::disable_external_cache,
+  String                           $disable_internal_cache     = $conntrackd::disable_internal_cache,
+  Integer                          $refresh_time               = $conntrackd::refresh_time,
+  Integer                          $cache_timeout              = $conntrackd::cache_timeout,
+  Integer                          $commit_timeout             = $conntrackd::commit_timeout,
+  Integer                          $purge_timeout              = $conntrackd::purge_timeout,
+  String                           $interface                  = $conntrackd::interface,
+  String                           $ipv4_address               = $conntrackd::ipv4_address,
+  String                           $ipv4_interface             = $conntrackd::ipv4_interface,
+  String                           $mcast_group                = $conntrackd::mcast_group,
+  Integer                          $sndsocketbuffer            = $conntrackd::sndsocketbuffer,
+  Integer                          $rcvsocketbuffer            = $conntrackd::rcvsocketbuffer,
+  String                           $checksum                   = $conntrackd::checksum,
+  Optional[String]                 $udp_ipv6_address           = $conntrackd::udp_ipv6_address,
+  Optional[String]                 $udp_ipv4_dest              = $conntrackd::udp_ipv4_dest,
+  Optional[String]                 $udp_ipv6_dest              = $conntrackd::udp_ipv6_dest,
+  Integer                          $udp_port                   = $conntrackd::udp_port,
+  Array                            $filter_accept_protocols    = $conntrackd::filter_accept_protocols,
+  String                           $tcp_window_tracking        = $conntrackd::tcp_window_tracking,
+  Array                            $track_tcp_states           = $conntrackd::track_tcp_states,
+  String                           $scheduler_type             = $conntrackd::scheduler_type,
+  String                           $scheduler_priority         = $conntrackd::scheduler_priority,
+  Optional[String]                 $stats_logfile              = $conntrackd::stats_logfile,
+  String                           $stats_netlink_reliable     = $conntrackd::stats_netlink_reliable,
+  Optional[String]                 $stats_syslog               = $conntrackd::stats_syslog,
+
+) {
+  assert_private()
 
   #### Config management
 
@@ -318,51 +323,30 @@ class conntrackd::config (
   }
 
   # sanity check some paramaters
-  if $interface == undef {
-    fail("\"${module_name}\": interface must be specified")
-  }
-
-  case $sync_mode {
-    'FTFW', 'NOTRACK', 'ALARM': {}
-    default: {
-      fail("\"${module_name}\": sync_mode \"${sync_mode}\" set incorrectly. Must be one of: 'FTFW', 'NOTRACK', 'ALARM'")
+  if $protocol == 'UDP' {
+    if $ipv4_address == undef and $udp_ipv6_address == undef {
+      fail("\"${module_name}\": protocol \"${protocol}\" requires atleast one of: ipv4_address, ipv6_address to be specified")
     }
-  }
-
-  case $protocol {
-    'Multicast': {
-      if ( $ipv4_address == undef or $ipv4_interface == undef or $mcast_group == undef or $interface == undef ) {
-        fail("\"${module_name}\": protocol \"${protocol}\" requires params: ipv4_address, ipv4_interface, mcast_group and interface to be specified")
-      }
+    if $ipv4_address and $udp_ipv4_dest == undef {
+      fail("\"${module_name}\": protocol \"${protocol}\" udp_ipv4_dest must be specified if ipv4_address is specified")
     }
-    'UDP': {
-      if ( ($ipv4_address == undef) and ($udp_ipv6_address == undef) ) {
-        fail("\"${module_name}\": protocol \"${protocol}\" requires atleast one of: ipv4_address, ipv6_address to be specified")
-      }
-      if ( $ipv4_address and ($udp_ipv4_dest == undef) ) {
-        fail("\"${module_name}\": protocol \"${protocol}\" udp_ipv4_dest must be specified if ipv4_address is specified")
-      }
-      if ( $udp_ipv6_address and ($udp_ipv6_dest == undef) ) {
-        fail("\"${module_name}\": protocol \"${protocol}\" udp_ipv6_dest must be specified if ipv6_address is specified")
-      }
-    }
-    default: {
-        fail("\"${module_name}\": protocol \"${protocol}\" set incorrectly. Must be one of: 'Multicast', 'UDP'")
+    if $udp_ipv6_address and $udp_ipv6_dest == undef {
+      fail("\"${module_name}\": protocol \"${protocol}\" udp_ipv6_dest must be specified if ipv6_address is specified")
     }
   }
 
   # manage config dir
   file { 'conntrackd-confdir':
     ensure => $config_dir_exists,
-    path   => $conntrackd::params::config_dir,
+    path   => $conntrackd::config_dir,
     mode   => '0755',
   }
 
   # configuration file
   file { 'conntrackd-config':
     ensure  => $config_exists,
-    path    => "${conntrackd::params::config_dir}/${conntrackd::params::config_filename}",
-    content => template('conntrackd/conntrackd.conf.erb'),
+    path    => "${conntrackd::config_dir}/${conntrackd::config_filename}",
+    content => epp('conntrackd/conntrackd.conf.epp'),
     mode    => '0644',
     require => File['conntrackd-confdir'],
     notify  => Service['conntrackd'],

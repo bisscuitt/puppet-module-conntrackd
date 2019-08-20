@@ -71,39 +71,103 @@
 # * Ian Bissett <mailto:bisscuitt@gmail.com>
 #
 class conntrackd (
-  $ensure                     = $conntrackd::params::ensure,
-  $autoupgrade                = $conntrackd::params::autoupgrade,
-  $status                     = $conntrackd::params::status,
-  ) inherits conntrackd::params {
+  Enum['present', 'absent']        $ensure,
+  Boolean                          $autoupgrade,
+  Enum[
+    'enabled',
+    'disabled',
+    'running',
+    'unmanaged'
+  ]                                $status,
+  Array                            $package,
+  String                           $service_name,
+  Boolean                          $service_hasrestart,
+  Boolean                          $service_hasstatus,
+  String                           $service_pattern,
+  String                           $service_status,
+  String                           $config_dir,
+  String                           $config_filename,
+  Integer[-20,19]                  $nice,
+  Integer                          $hashsize,
+  String                           $logfile,
+  String                           $syslog,
+  String                           $lockfile,
+  String                           $sock_path,
+  Integer                          $sock_backlog,
+  Array                            $ignore_ips_ipv4,
+  Array                            $ignore_ips_ipv6,
+  Array                            $tcp_flows,
 
+  Integer                          $netlinkbuffersize,
+  Integer                          $netlinkbuffersizemaxgrowth,
+  String                           $netlinkoverrunresync,
+  String                           $netlinkeventsreliable,
+  Optional[Integer]                $pollsecs,
+  Integer                          $eventiterationlimit,
+
+  Enum['FTFW', 'NOTRACK', 'ALARM'] $sync_mode,
+  Integer                          $resend_queue_size,
+  Integer                          $ack_window_size,
+  String                           $disable_external_cache,
+  String                           $disable_internal_cache,
+  Integer                          $refresh_time,
+  Integer                          $cache_timeout,
+  Integer                          $commit_timeout,
+  Integer                          $purge_timeout,
+
+  Enum['Multicast', 'UDP']         $protocol,
+  String                           $interface,
+  String                           $ipv4_address,
+  String                           $ipv4_interface,
+  String                           $mcast_group,
+  Integer                          $sndsocketbuffer,
+  Integer                          $rcvsocketbuffer,
+  String                           $checksum,
+  Optional[String]                 $udp_ipv6_address,
+  Optional[String]                 $udp_ipv4_dest,
+  Optional[String]                 $udp_ipv6_dest,
+  Integer                          $udp_port,
+
+  Array                            $filter_accept_protocols,
+
+  String                           $tcp_window_tracking,
+  Array                            $track_tcp_states,
+
+  String                           $scheduler_type,
+  String                           $scheduler_priority,
+
+  Optional[String]                 $stats_logfile,
+  String                           $stats_netlink_reliable,
+  Optional[String]                 $stats_syslog,
+
+  # -- Set the hashlimit to be double the sysctl valueof net.nf_conntrack_max
+  #    uses custom fact defined in this module
+  Optional[Integer]                $hashlimit                  = undef,
+) {
   #### Validate parameters
-
-  # ensure
-  if ! ($ensure in [ 'present', 'absent' ]) {
-    fail("\"${ensure}\" is not a valid ensure parameter value")
-  }
-
-  # autoupgrade
-  validate_bool($autoupgrade)
-
-  # service status
-  if ! ($status in [ 'enabled', 'disabled', 'running', 'unmanaged' ]) {
-    fail("\"${status}\" is not a valid status parameter value")
+  if $hashlimit {
+    $_hashlimit = $hashlimit
+  } elsif $facts['nf_conntrack_max'] {
+    $_hashlimit = ($facts['nf_conntrack_max'] + 0) * 2
+  } else {
+    $_hashlimit = 131072
   }
 
   #### Manage actions
 
   # package
-  class { 'conntrackd::package': }
+  include conntrackd::package
 
   # service
-  class { 'conntrackd::service': }
+  include conntrackd::service
 
   #### Manage relationships
 
   if $ensure == 'present' {
+    include conntrackd::config
+
     # we need the software before running a service
-    Class['conntrackd::package'] -> Class['conntrackd::service']
+    Class['conntrackd::package'] -> Class['conntrackd::config'] ~> Class['conntrackd::service']
 
   } else {
 

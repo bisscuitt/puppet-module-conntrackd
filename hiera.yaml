@@ -1,0 +1,7 @@
+---
+version: 5
+hierarchy:
+  - name: "OS Family"
+    path: "%{facts.os.family}.yaml"
+  - name: "Common"
+    path: "common.yaml"

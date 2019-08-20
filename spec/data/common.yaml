@@ -1,0 +1,3 @@
+---
+conntrackd::interface: eth0
+conntrackd::ipv4_interface: 192.168.1.1
