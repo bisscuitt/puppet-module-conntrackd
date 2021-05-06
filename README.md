@@ -12,17 +12,17 @@ Supports both ipv4 and ipv6, all conntrackd options and all sync modes.
 
 Compatible with Debian, Ubuntu and RedHat, Fedora, Centos, Scientific distros.
 
-This module is designed to work with Puppet version 2.7.x or newer.
+This module is designed to work with Puppet version 4.10 or newer.
 
 ## Requirements
 
 This module has got the following module dependencies:
 
-[stdlib]
-  Version 2.3.1 or newer. Standard library of useful resources by Puppet Labs.
+[stdlib](https://forge.puppet.com/puppetlabs/stdlib)
+  Version 4.19.0 or newer. Standard library of useful resources by Puppet Labs.
   It provides functions like validate\_\*(), is\_\*() and empty(). 
   More information:
-  * stdlib at Puppet Forge <http://forge.puppetlabs.com/puppetlabs/stdlib>
+  * stdlib at Puppet Forge <https://forge.puppet.com/puppetlabs/stdlib>
   * The module source code <http://j.mp/w00GZr> to get a listing of available
     functions.
 

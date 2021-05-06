@@ -1,0 +1,104 @@
+Sync {
+	Mode <%= $conntrackd::config::sync_mode %> {
+<% if $conntrackd::config::sync_mode == 'FTFW' { -%>
+		ResendQueueSize <%= $conntrackd::config::resend_queue_size %>
+		ACKWindowSize <%= $conntrackd::config::ack_window_size %>
+		DisableExternalCache <%= $conntrackd::config::disable_external_cache %>
+<% } elsif $conntrackd::config::sync_mode == 'NOTRACK' { -%>
+		DisableInternalCache <%= $conntrackd::config::disable_internal_cache %>
+		DisableExternalCache <%= $conntrackd::config::disable_external_cache %>
+<% } elsif $conntrackd::config::sync_mode == 'ALARM' { -%>
+        RefreshTime <%= $conntrackd::config::refresh_time %>
+        CacheTimeout <%= $conntrackd::config::cache_timeout %>
+<% } -%>
+		CommitTimeout <%= $conntrackd::config::commit_timeout %>
+		PurgeTimeout <%= $conntrackd::config::purge_timeout %>
+	}
+
+<% if $conntrackd::config::protocol == 'Multicast' { -%>
+	Multicast {
+		IPv4_address <%= $conntrackd::config::ipv4_address %>
+		Group <%= $conntrackd::config::mcast_group %>
+		IPv4_interface <%= $conntrackd::config::ipv4_interface %>
+		Interface <%= $conntrackd::config::interface %>
+		SndSocketBuffer <%= $conntrackd::config::sndsocketbuffer %>
+		RcvSocketBuffer <%= $conntrackd::config::rcvsocketbuffer %>
+		Checksum <%= $conntrackd::config::checksum %>
+	}
+<% } elsif $conntrackd::config::protocol == 'UDP' { -%>
+	UDP {
+<%   if $conntrackd::config::ipv4_address { -%>
+		IPv4_address <%= $conntrackd::config::ipv4_address %>
+		IPv4_Destination_Address <%= $conntrackd::config::udp_ipv4_dest %>
+<%   } elsif $conntrackd::config::udp_ipv6_address { -%>
+		IPv6_address <%= $conntrackd::config::udp_ipv6_address %>
+		IPv6_Destination_Address <%= $conntrackd::config::udp_ipv6_dest %>
+<%   } -%>
+		Port <%= $conntrackd::config::udp_port %>
+		Interface <%= $conntrackd::config::interface %>
+		SndSocketBuffer <%= $conntrackd::config::sndsocketbuffer %>
+		RcvSocketBuffer <%= $conntrackd::config::rcvsocketbuffer %>
+		Checksum <%= $conntrackd::config::checksum %>
+	}
+<% } -%>
+
+	Options {
+		TCPWindowTracking <%= $conntrackd::config::tcp_window_tracking %>
+	}
+}
+
+General {
+	Nice <%= $conntrackd::config::nice %>
+
+	Scheduler {
+		Type <%= $conntrackd::config::scheduler_type %>
+		Priority <%= $conntrackd::config::scheduler_priority %>
+	}
+
+	HashSize <%= $conntrackd::config::hashsize %>
+	HashLimit <%= $conntrackd::config::hashlimit %>
+	LogFile <%= $conntrackd::config::logfile %>
+	Syslog <%= $conntrackd::config::syslog %>
+	LockFile <%= $conntrackd::config::lockfile %>
+
+	UNIX {
+		Path <%= $conntrackd::config::sock_path %>
+		Backlog <%= $conntrackd::config::sock_backlog %>
+	}
+
+	NetlinkBufferSize <%= $conntrackd::config::netlinkbuffersize %>
+	NetlinkBufferSizeMaxGrowth <%= $conntrackd::config::netlinkbuffersizemaxgrowth %>
+	NetlinkOverrunResync <%= $conntrackd::config::netlinkoverrunresync %>
+	NetlinkEventsReliable <%= $conntrackd::config::netlinkeventsreliable %>
+<% if $conntrackd::config::pollsecs { -%>
+	PollSecs <%= $conntrackd::config::pollsecs %>
+<% } -%>
+	EventIterationLimit <%= $conntrackd::config::eventiterationlimit %>
+
+	Filter From Userspace {
+		Protocol Accept {
+<% $conntrackd::config::filter_accept_protocols.each |$proto| { -%>
+                    <%= $proto %>
+<% } -%>
+		}
+
+		Address Ignore {
+<% $conntrackd::config::ignore_ips_ipv4.each |$address| { -%>
+			IPv4_address <%= $address %>
+<% } -%>
+<% $conntrackd::config::ignore_ips_ipv6.each |$address| { -%>
+			IPv6_address <%= $address %>
+<% } -%>
+		}
+		State Accept {
+			<%= $conntrackd::config::track_tcp_states.join(' ') %> for TCP
+		}
+	}
+}
+<% if $conntrackd::config::stats_logfile or $conntrackd::config::stats_syslog { %>
+Stats {
+    LogFile <%= $conntrackd::config::stats_logfile %>
+    NetlinkEventsReliable <%= $conntrackd::config::stats_netlink_reliable %>
+    Syslog <%= $conntrackd::config::stats_syslog %>
+}
+<% } -%>

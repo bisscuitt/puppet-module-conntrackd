@@ -1,0 +1,88 @@
+---
+# ensure
+conntrackd::ensure: 'present'
+
+# autoupgrade
+conntrackd::autoupgrade: false
+
+# service status
+conntrackd::status: 'enabled'
+
+#### Internal module values
+
+conntrackd::service_hasrestart: true
+conntrackd::service_hasstatus: true
+conntrackd::service_name: 'conntrackd'
+conntrackd::service_pattern: 'conntrackd'
+conntrackd::service_status: '/usr/bin/pgrep conntrackd >/dev/null'
+
+# location of configuration file
+conntrackd::config_dir: '/etc/conntrackd'
+conntrackd::config_filename: 'conntrackd.conf'
+
+# Configuration file parameters
+conntrackd::nice: -1
+conntrackd::hashsize: 32768
+conntrackd::logfile: 'off'
+conntrackd::syslog: 'on'
+conntrackd::lockfile: '/var/lock/conntrack.lock'
+conntrackd::sock_path: '/var/run/conntrackd.ctl'
+conntrackd::sock_backlog: 20
+conntrackd::ignore_ips_ipv4:
+  - '127.0.0.1'
+  - '192.168.0.1'
+  - '10.1.1.1'
+conntrackd::ignore_ips_ipv6:
+  - '::1'
+conntrackd::tcp_flows:
+  - 'ESTABLISHED'
+  - 'CLOSED'
+  - 'TIME_WAIT'
+  - 'CLOSE_WAIT'
+
+conntrackd::netlinkbuffersize: 2097152
+conntrackd::netlinkbuffersizemaxgrowth: 8388608
+conntrackd::netlinkoverrunresync: 'on'
+conntrackd::netlinkeventsreliable: 'Off'
+conntrackd::pollsecs: ~
+conntrackd::eventiterationlimit: 100
+
+conntrackd::sync_mode: 'FTFW'
+conntrackd::resend_queue_size: 131072
+conntrackd::ack_window_size: 300
+conntrackd::disable_external_cache: 'Off'
+conntrackd::disable_internal_cache: 'Off'
+conntrackd::refresh_time: 15
+conntrackd::cache_timeout: 180
+conntrackd::commit_timeout: 180
+conntrackd::purge_timeout: 60
+
+conntrackd::protocol: 'Multicast'
+conntrackd::ipv4_address: '225.0.0.50'
+conntrackd::mcast_group: '3780'
+conntrackd::sndsocketbuffer: 1249280
+conntrackd::rcvsocketbuffer: 1249280
+conntrackd::checksum: 'on'
+conntrackd::udp_ipv6_address: ~
+conntrackd::udp_ipv4_dest: ~
+conntrackd::udp_ipv6_dest: ~
+conntrackd::udp_port: 3780
+
+conntrackd::filter_accept_protocols:
+  - 'TCP'
+  - 'SCTP'
+  - 'DCCP'
+
+conntrackd::tcp_window_tracking: 'Off'
+conntrackd::track_tcp_states:
+  - 'ESTABLISHED'
+  - 'CLOSED'
+  - 'TIME_WAIT'
+  - 'CLOSE_WAIT'
+
+conntrackd::scheduler_type: 'FIFO'
+conntrackd::scheduler_priority: '99'
+
+conntrackd::stats_logfile: ~
+conntrackd::stats_netlink_reliable: 'Off'
+conntrackd::stats_syslog: ~
