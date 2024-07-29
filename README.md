@@ -1,4 +1,4 @@
-# Module Archived
+# !!! Module Archived !!!
 This module is now maintained by the @voxpupuli team: https://github.com/voxpupuli/puppet-conntrackd/
 
 # puppet-module-conntrackd
