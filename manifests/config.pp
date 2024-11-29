@@ -254,54 +254,91 @@
 #   string:  enable syslog logging of statistics
 #   values:  <tt>on</tt>, <tt>off</tt> or <tt><syslog facility></tt>
 #
+#  [*systemd*]
+#   boolean: Whether to use systemd mode or not
+#   values: <tt>true</tt>, <tt>false</tt>
+#   Default: <tt>false</tt>
+#
+#  [*expectation_sync*]
+#   String of Array of expectation sync. If value is a string it must
+#     be one of On or Off.
+#   values: <tt>On</tt>, <tt>Off</tt>, <tt>[Array]</tt>
+#   Default: <tt>Off</tt>
+#
+# [*kernel_ignore_ips_ipv4*]
+#   array:   list of IPv4 addresses to ignore in kernel space.
+#            should include this node's address
+#   Default: <tt>[ '127.0.0.1', '192.168.0.1', '10.1.1.1' ]</tt>
+#
+# [*kernel_ignore_ips_ipv6*]
+#   array:   list of IPv4 addresses to ignore in kernel space.
+#            should include this node's address
+#   Default: <tt>[ '::1' ]</tt>
+#
+#  [*kernel_filter_accept_protocols*]
+#   array:   Accept only certain protocols
+#   values:  <tt>TCP</tt>, <tt>SCTP</tt>, <tt>DCCP</tt>,
+#            <tt>UDP</tt>, <tt>ICMP</tt>, <tt>IPv6-ICMP</tt>
+#   Default: <tt>[ 'TCP', 'SCTP', 'DCCP' ]</tt>
+#
+#  [*kernel_track_tcp_states*]
+#   array:   The specific TCP states to sync in kernel space
+#   Default: <tt>[ 'ESTABLISHED', 'CLOSED', 'TIME_WAIT', 'CLOSE_WAIT' ]</tt>
+#
 # === Authors
 #
 # * Ian Bissett <mailto:bisscuitt@gmail.com>
 #
 class conntrackd::config (
-  $protocol                   = $conntrackd::params::protocol,
-  $nice                       = $conntrackd::params::nice,
-  $hashsize                   = $conntrackd::params::hashsize,
-  $hashlimit                  = $conntrackd::params::hashlimit,
-  $logfile                    = $conntrackd::params::logfile,
-  $syslog                     = $conntrackd::params::syslog,
-  $lockfile                   = $conntrackd::params::lockfile,
-  $sock_path                  = $conntrackd::params::sock_path,
-  $sock_backlog               = $conntrackd::params::sock_backlog,
-  $ignore_ips_ipv4            = $conntrackd::params::ignore_ips_ipv4,
-  $ignore_ips_ipv6            = $conntrackd::params::ignore_ips_ipv6,
-  $tcp_flows                  = $conntrackd::params::tcp_flows,
-  $netlinkbuffersize          = $conntrackd::params::netlinkbuffersize,
-  $netlinkbuffersizemaxgrowth = $conntrackd::params::netlinkbuffersizemaxgrowth,
-  $netlinkoverrunresync       = $conntrackd::params::netlinkoverrunresync,
-  $netlinkeventsreliable      = $conntrackd::params::netlinkeventsreliable,
-  $pollsecs                   = $conntrackd::params::pollsecs,
-  $eventiterationlimit        = $conntrackd::params::eventiterationlimit,
-  $sync_mode                  = $conntrackd::params::sync_mode,
-  $resend_queue_size          = $conntrackd::params::resend_queue_size,
-  $ack_window_size            = $conntrackd::params::ack_window_size,
-  $disable_external_cache     = $conntrackd::params::disable_external_cache,
-  $disable_internal_cache     = $conntrackd::params::disable_internal_cache,
-  $refresh_time               = $conntrackd::params::refresh_time,
-  $cache_timeout              = $conntrackd::params::cache_timeout,
-  $commit_timeout             = $conntrackd::params::commit_timeout,
-  $purge_timeout              = $conntrackd::params::purge_timeout,
-  $interface                  = $conntrackd::params::interface,
-  $ipv4_address               = $conntrackd::params::ipv4_address,
-  $ipv4_interface             = $conntrackd::params::ipv4_interface,
-  $mcast_group                = $conntrackd::params::mcast_group,
-  $sndsocketbuffer            = $conntrackd::params::sndsocketbuffer,
-  $rcvsocketbuffer            = $conntrackd::params::rcvsocketbuffer,
-  $checksum                   = $conntrackd::params::checksum,
-  $udp_ipv6_address           = $conntrackd::params::udp_ipv6_address,
-  $udp_ipv4_dest              = $conntrackd::params::udp_ipv4_dest,
-  $udp_ipv6_dest              = $conntrackd::params::udp_ipv6_dest,
-  $udp_port                   = $conntrackd::params::udp_port,
-  $filter_accept_protocols    = $conntrackd::params::filter_accept_protocols,
-  $tcp_window_tracking        = $conntrackd::params::tcp_window_tracking,
-  $track_tcp_states           = $conntrackd::params::track_tcp_states,
-  $scheduler_type             = $conntrackd::params::scheduler_type,
-  $scheduler_priority         = $conntrackd::params::scheduler_priority,
+  $protocol                       = $conntrackd::params::protocol,
+  $nice                           = $conntrackd::params::nice,
+  $hashsize                       = $conntrackd::params::hashsize,
+  $hashlimit                      = $conntrackd::params::hashlimit,
+  $logfile                        = $conntrackd::params::logfile,
+  $syslog                         = $conntrackd::params::syslog,
+  $lockfile                       = $conntrackd::params::lockfile,
+  $sock_path                      = $conntrackd::params::sock_path,
+  $sock_backlog                   = $conntrackd::params::sock_backlog,
+  $ignore_ips_ipv4                = $conntrackd::params::ignore_ips_ipv4,
+  $ignore_ips_ipv6                = $conntrackd::params::ignore_ips_ipv6,
+  $tcp_flows                      = $conntrackd::params::tcp_flows,
+  $netlinkbuffersize              = $conntrackd::params::netlinkbuffersize,
+  $netlinkbuffersizemaxgrowth     = $conntrackd::params::netlinkbuffersizemaxgrowth,
+  $netlinkoverrunresync           = $conntrackd::params::netlinkoverrunresync,
+  $netlinkeventsreliable          = $conntrackd::params::netlinkeventsreliable,
+  $pollsecs                       = $conntrackd::params::pollsecs,
+  $eventiterationlimit            = $conntrackd::params::eventiterationlimit,
+  $sync_mode                      = $conntrackd::params::sync_mode,
+  $resend_queue_size              = $conntrackd::params::resend_queue_size,
+  $ack_window_size                = $conntrackd::params::ack_window_size,
+  $disable_external_cache         = $conntrackd::params::disable_external_cache,
+  $disable_internal_cache         = $conntrackd::params::disable_internal_cache,
+  $refresh_time                   = $conntrackd::params::refresh_time,
+  $cache_timeout                  = $conntrackd::params::cache_timeout,
+  $commit_timeout                 = $conntrackd::params::commit_timeout,
+  $purge_timeout                  = $conntrackd::params::purge_timeout,
+  $interface                      = $conntrackd::params::interface,
+  $ipv4_address                   = $conntrackd::params::ipv4_address,
+  $ipv4_interface                 = $conntrackd::params::ipv4_interface,
+  $mcast_group                    = $conntrackd::params::mcast_group,
+  $sndsocketbuffer                = $conntrackd::params::sndsocketbuffer,
+  $rcvsocketbuffer                = $conntrackd::params::rcvsocketbuffer,
+  $checksum                       = $conntrackd::params::checksum,
+  $udp_ipv6_address               = $conntrackd::params::udp_ipv6_address,
+  $udp_ipv4_dest                  = $conntrackd::params::udp_ipv4_dest,
+  $udp_ipv6_dest                  = $conntrackd::params::udp_ipv6_dest,
+  $udp_port                       = $conntrackd::params::udp_port,
+  $filter_accept_protocols        = $conntrackd::params::filter_accept_protocols,
+  $tcp_window_tracking            = $conntrackd::params::tcp_window_tracking,
+  $track_tcp_states               = $conntrackd::params::track_tcp_states,
+  $scheduler_type                 = $conntrackd::params::scheduler_type,
+  $scheduler_priority             = $conntrackd::params::scheduler_priority,
+  $systemd                        = $conntrackd::params::systemd,
+  $expectation_sync               = $conntrackd::params::expectation_sync,
+  $kernel_ignore_ips_ipv4         = $conntrackd::params::kernel_ignore_ips_ipv4,
+  $kernel_ignore_ips_ipv6         = $conntrackd::params::kernel_ignore_ips_ipv6,
+  $kernel_track_tcp_states        = $conntrackd::params::kernel_track_tcp_states,
+  $kernel_filter_accept_protocols = $conntrackd::params::kernel_filter_accept_protocols,
   ) inherits conntrackd {
 
   #### Config management
@@ -349,6 +386,17 @@ class conntrackd::config (
     default: {
         fail("\"${module_name}\": protocol \"${protocol}\" set incorrectly. Must be one of: 'Multicast', 'UDP'")
     }
+  }
+
+  if $expectation_sync.is_a(String) {
+    case $expectation_sync {
+      'On', 'Off': {}
+      default: {
+        fail("\"${module_name}\": expectation_sync \"${expectation_sync}\" set incorrectly: Must be one of: 'On', 'Off'")
+      }
+    }
+  } elsif !$expectation_sync.is_a(Array) {
+    fail("\"${module_name}\": expectation_sync must be String or Array")
   }
 
   # manage config dir
